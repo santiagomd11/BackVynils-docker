@@ -3,16 +3,12 @@ version: "3.8"
 services:
   web:
     build: .
-    command: npm run start
-    volumes:
-      - /usr/src/app
+    command: npm run start:prod
     environment:
-      DB_HOST: "db"
+      DB_HOST: db
     ports:
       - "3000:3000"
     depends_on:
-      - db
-    links:
       - db
     networks:
       - default
@@ -25,5 +21,10 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     networks:
       - default
+
+volumes:
+  pgdata:
