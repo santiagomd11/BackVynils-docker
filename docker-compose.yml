@@ -23,8 +23,17 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    networks:
-      - default
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d 
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@uniandes.edu.co
+      PGADMIN_DEFAULT_PASSWORD: miso4203
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
 
 volumes:
   pgdata:
